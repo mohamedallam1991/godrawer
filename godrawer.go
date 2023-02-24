@@ -76,7 +76,7 @@ func (b *ConcreteImageBuilder) SetColor(color color.Color) ImageBuilder {
 
 func (b *ConcreteImageBuilder) GetsColor() string {
 	// some := gg.NewSolidPattern(color)
-	a := b.Specs.BackGroundColor
+	// a := b.Specs.BackGroundColor
 
 	// b.Specs.BackGroundColor = gg.NewSolidPattern(color)
 	fmt.Println("Setting SetColors")
@@ -86,7 +86,7 @@ func (b *ConcreteImageBuilder) GetsColor() string {
 }
 
 func (b ConcreteImageBuilder) DrawSolidColor(solidColor string) {
-	dc := i.DC
+	dc := b.DC
 
 	var c color.Color
 
