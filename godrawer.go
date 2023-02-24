@@ -65,10 +65,10 @@ func (b *ConcreteImageBuilder) SetSignature(text string) ImageBuilder {
 	return b
 }
 
-func (b *ConcreteImageBuilder) SetColor(color color.Color) ImageBuilde	r {
+func (b *ConcreteImageBuilder) SetColor(color color.Color) ImageBuilder {
 	// some := gg.NewSolidPattern(color)
 	b.Specs.BackGroundColor = gg.NewSolidPattern(color)
-	f := fmt.Fprintf("Setting SetColors")
+	// f := fmt.Fprintf("Setting SetColors")
 	// b.Specs.BackGroundColor = color
 	// b.Specs.Colors = colors
 	return b
@@ -85,7 +85,7 @@ func (b *ConcreteImageBuilder) GetsColor() string {
 	return "as"
 }
 
-func (i ConcreteImageBuilder) DrawSolidColor(solidColor string) {
+func (b ConcreteImageBuilder) DrawSolidColor(solidColor string) {
 	dc := i.DC
 
 	var c color.Color
