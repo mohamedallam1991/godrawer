@@ -2,28 +2,26 @@ package godrawer
 
 import (
 	"image/color"
-
-	"github.com/fogleman/gg"
 )
 
-func drawGradient(dc *gg.Context) {
-	gradient := gg.NewLinearGradient(0, 0, 0, float64(dc.Height()))
+// func drawGradient(dc *gg.Context) {
+// 	gradient := gg.NewLinearGradient(0, 0, 0, float64(dc.Height()))
 
-	gradient.AddColorStop(0, color.CMYK{20, 99, 0, 64})
-	gradient.AddColorStop(0.35, color.CMYK{0, 72, 41, 42})
-	gradient.AddColorStop(1, color.CMYK{0, 46, 53, 24})
+// 	gradient.AddColorStop(0, color.CMYK{20, 99, 0, 64})
+// 	gradient.AddColorStop(0.35, color.CMYK{0, 72, 41, 42})
+// 	gradient.AddColorStop(1, color.CMYK{0, 46, 53, 24})
 
-	c := mySolidColor{}
+// 	c := mySolidColor{}
 
-	// accepts color.color and rerturn gg.Pattern
-	d := gg.NewSolidPattern(c)
+// 	// accepts color.color and rerturn gg.Pattern
+// 	d := gg.NewSolidPattern(c)
 
-	dc.SetFillStyle(d)
-	// dc.SetFillStyle(gradient)
-	// dc.DrawRectangle(0, 0, float64(dc.Width()), float64(dc.Height()))
-	dc.DrawRoundedRectangle(0, 0, float64(dc.Width()), float64(dc.Height()), 10)
-	dc.Fill()
-}
+// 	dc.SetFillStyle(d)
+// 	// dc.SetFillStyle(gradient)
+// 	// dc.DrawRectangle(0, 0, float64(dc.Width()), float64(dc.Height()))
+// 	dc.DrawRoundedRectangle(0, 0, float64(dc.Width()), float64(dc.Height()), 10)
+// 	dc.Fill()
+// }
 
 type mySolidColor struct {
 	Name string
@@ -54,9 +52,9 @@ func (c mySolidColor) RGBA() (r, g, b, a uint32) {
 // 	"cyan":    mySolidColor{Name: "cyan", R: 0, G: 255, B: 255, A: 255},
 // }
 
-func NewColor(text string) {
-
-}
+// func NewColor(text string) {
+// mySolidColor{Name: "cyan", R: 0, G: 255, B: 255, A: 255},
+// }
 
 // func (m mySolidColor) DrawSolid(dc *gg.Context) {
 // func (coonc ConcreteImageBuilder) DrawSolid(mySolidColor color.Color) {
@@ -76,6 +74,20 @@ func NewColor(text string) {
 
 // "khaki": mySolidColor{Name: "khaki", R: 240, G:
 // "coral":         mySolidColor{Name: "coral", R: 255, G: 127, B: 80, A: 255},
+
+func GetColors() []string {
+	// var colors []string
+	// fmt.Println("mapsize ", len(presetColors))
+	listOfcolors := make([]string, len(presetColors))
+	i := 0
+	for color := range presetColors {
+		listOfcolors[i] = color
+		i++
+	}
+	// fmt.Println("array size ", len(listOfcolors))
+
+	return listOfcolors
+}
 
 var presetColors = map[string]color.Color{
 	"red":            mySolidColor{Name: "red", R: 255, G: 0, B: 0, A: 255},

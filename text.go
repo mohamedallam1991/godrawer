@@ -1,6 +1,7 @@
 package godrawer
 
 import (
+	"fmt"
 	"image/color"
 	"log"
 	"strings"
@@ -33,4 +34,59 @@ func drawText(dc *gg.Context, text string, width, height int) {
 		dc.DrawStringAnchored(line, float64(x), float64(y), 0.5, 0.5)
 		y += lineHeight
 	}
+}
+
+func (b *ConcreteImageBuilder) DrawTextStringWrappedSHadow() {
+	dc := b.DC
+	text := b.Specs.Text
+	fmt.Println("heyyydrawText ")
+	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
+	fontSize := float64(120)
+
+	err := dc.LoadFontFace(fontPath, fontSize)
+	if err != nil {
+		log.Fatal(err)
+	}
+	dc.SetColor(color.White)
+
+	// Draw the wrapped text in the center of the image
+	x := float64(b.Specs.Width) / 2.0
+	y := float64(b.Specs.Height) / 2.0
+	width := float64(b.Specs.Width)
+	lineSpacing := 1.5 // adjust this value to change the line spacing
+	align := gg.AlignCenter
+
+	// Add shadow to the text
+	dc.SetColor(color.Black)
+
+	// Draw a shadow with an offset before drawing the actual text
+	dc.SetHexColor("#000000")
+	// dc.DrawStringWrapped(text, x+3, y+3, 0.5, 0.5, width, lineSpacing, align)
+	dc.DrawStringWrapped(text, x+10, y+10, 0.5, 0.5, width, lineSpacing, align)
+
+	// Draw the actual text
+	dc.SetHexColor("#FFFFFF")
+	dc.DrawStringWrapped(text, x, y, 0.5, 0.5, width, lineSpacing, align)
+}
+
+func (b *ConcreteImageBuilder) DrawTextStringWrapped() {
+	dc := b.DC
+	text := b.Specs.Text
+	fmt.Println("heyyydrawText ")
+	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
+	fontSize := float64(72)
+
+	err := dc.LoadFontFace(fontPath, fontSize)
+	if err != nil {
+		log.Fatal(err)
+	}
+	dc.SetColor(color.White)
+
+	// Draw the wrapped text in the center of the image
+	x := float64(b.Specs.Width) / 2.0
+	y := float64(b.Specs.Height) / 2.0
+	width := float64(b.Specs.Width)
+	lineSpacing := 1.5 // adjust this value to change the line spacing
+	align := gg.AlignCenter
+	dc.DrawStringWrapped(text, x, y, 0.5, 0.5, width, lineSpacing, align)
 }
