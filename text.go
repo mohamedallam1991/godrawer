@@ -74,7 +74,7 @@ func (b *ConcreteImageBuilder) DrawTextStringWrapped() {
 	text := b.Specs.text
 	fmt.Println("heyyydrawText ")
 	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
-	fontSize := float64(72)
+	fontSize := b.Specs.fontSize
 
 	err := dc.LoadFontFace(fontPath, fontSize)
 	if err != nil {
