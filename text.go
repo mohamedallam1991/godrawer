@@ -71,7 +71,7 @@ func (b *ConcreteImageBuilder) DrawTextStringWrappedSHadow() {
 
 func (b *ConcreteImageBuilder) DrawTextStringWrapped() {
 	dc := b.DC
-	text := b.Specs.Text
+	text := b.Specs.text
 	fmt.Println("heyyydrawText ")
 	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
 	fontSize := float64(72)
