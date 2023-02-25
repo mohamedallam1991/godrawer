@@ -41,7 +41,7 @@ func (b *ConcreteImageBuilder) DrawTextStringWrappedSHadow() {
 	text := b.Specs.text
 	fmt.Println("heyyydrawText ")
 	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
-	fontSize := float64(120)
+	fontSize := b.Specs.fontSize
 
 	err := dc.LoadFontFace(fontPath, fontSize)
 	if err != nil {
@@ -52,7 +52,7 @@ func (b *ConcreteImageBuilder) DrawTextStringWrappedSHadow() {
 	// Draw the wrapped text in the center of the image
 	x := float64(b.Specs.Width) / 2.0
 	y := float64(b.Specs.Height) / 2.0
-	width := float64(b.Specs.Width)
+	width := float64(b.Specs.Width) - 20
 	lineSpacing := 1.5 // adjust this value to change the line spacing
 	align := gg.AlignCenter
 

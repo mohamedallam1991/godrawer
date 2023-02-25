@@ -235,7 +235,7 @@ func (b *ConcreteImageBuilder) DrawText() {
 	text := b.Specs.text
 	fmt.Println("heyyydrawText ")
 	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
-	fontSize := float64(72)
+	fontSize := b.Specs.fontSize
 	// height := b.Specs.Height
 	// width := b.Specs.Width
 	err := dc.LoadFontFace(fontPath, fontSize)
@@ -266,7 +266,7 @@ func (b *ConcreteImageBuilder) DrawTextMultiline() {
 	text := b.Specs.text
 	fmt.Println("heyyydrawText ")
 	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
-	fontSize := float64(140)
+	fontSize := b.Specs.fontSize
 
 	err := dc.LoadFontFace(fontPath, fontSize)
 	if err != nil {
