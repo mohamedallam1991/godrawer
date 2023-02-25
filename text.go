@@ -38,7 +38,7 @@ func drawText(dc *gg.Context, text string, width, height int) {
 
 func (b *ConcreteImageBuilder) DrawTextStringWrappedSHadow() {
 	dc := b.DC
-	text := b.Specs.Text
+	text := b.Specs.text
 	fmt.Println("heyyydrawText ")
 	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
 	fontSize := float64(120)

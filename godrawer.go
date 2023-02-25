@@ -13,8 +13,9 @@ import (
 type ImageSpecs struct {
 	Width           int
 	Height          int
-	Text            string
-	Signature       string
+	text            string
+	signature       string
+	fontSize        float64
 	BackGroundColor gg.Pattern
 }
 
@@ -32,11 +33,6 @@ type ImageBuilder interface {
 	Build() image.Image
 }
 
-type ConcreteImageBuilder struct {
-	Specs ImageSpecs
-	DC    *gg.Context
-}
-
 func NewConcreteImageBuilder(specs ImageSpecs) *ConcreteImageBuilder {
 	dc := gg.NewContext(specs.Width, specs.Height)
 	return &ConcreteImageBuilder{
@@ -45,34 +41,52 @@ func NewConcreteImageBuilder(specs ImageSpecs) *ConcreteImageBuilder {
 	}
 }
 
-func (b *ConcreteImageBuilder) SetDimensions(width, height int) ImageBuilder {
-	fmt.Println("Seting Dimensions")
-	b.Specs.Width = width
-	b.Specs.Height = height
-	return b
+type ConcreteImageBuilder struct {
+	Specs ImageSpecs
+	DC    *gg.Context
 }
 
-func (b *ConcreteImageBuilder) SetText(text string) ImageBuilder {
-	fmt.Println("Setting Text")
-
-	b.Specs.Text = text
-	return b
+func (i *ImageSpecs) SetFont(fontSize int) *ImageSpecs {
+	i.fontSize = float64(fontSize)
+	return i
 }
-func (b *ConcreteImageBuilder) SetSignature(text string) ImageBuilder {
-	fmt.Println("Setting Signature")
-
-	b.Specs.Signature = text
-	return b
+func (i *ImageSpecs) SetText(text string) *ImageSpecs {
+	i.text = text
+	return i
+}
+func (i *ImageSpecs) SetSignature(text string) *ImageSpecs {
+	i.signature = text
+	return i
 }
 
-func (b *ConcreteImageBuilder) SetColor(color color.Color) ImageBuilder {
-	// some := gg.NewSolidPattern(color)
-	b.Specs.BackGroundColor = gg.NewSolidPattern(color)
-	// f := fmt.Fprintf("Setting SetColors")
-	// b.Specs.BackGroundColor = color
-	// b.Specs.Colors = colors
-	return b
-}
+// func (b *ConcreteImageBuilder) SetDimensions(width, height int) ImageBuilder {
+// 	fmt.Println("Seting Dimensions")
+// 	b.Specs.Width = width
+// 	b.Specs.Height = height
+// 	return b
+// }
+
+// func (b *ConcreteImageBuilder) SetText(text string) ImageBuilder {
+// 	fmt.Println("Setting Text")
+
+//		b.Specs.Text = text
+//		return b
+//	}
+// func (b *ConcreteImageBuilder) SetSignature(text string) ImageBuilder {
+// 	fmt.Println("Setting Signature")
+
+// 	b.Specs.Signature = text
+// 	return b
+// }
+
+// func (b *ConcreteImageBuilder) SetColor(color color.Color) ImageBuilder {
+// 	// some := gg.NewSolidPattern(color)
+// 	b.Specs.BackGroundColor = gg.NewSolidPattern(color)
+// 	// f := fmt.Fprintf("Setting SetColors")
+// 	// b.Specs.BackGroundColor = color
+// 	// b.Specs.Colors = colors
+// 	return b
+// }
 
 // func (b *ConcreteImageBuilder) GetsColor() string {
 // 	// some := gg.NewSolidPattern(color)
@@ -218,7 +232,7 @@ func (b ConcreteImageBuilder) DrawHorizontalGradientColors(solidColor ...string)
 
 func (b *ConcreteImageBuilder) DrawText() {
 	dc := b.DC
-	text := b.Specs.Text
+	text := b.Specs.text
 	fmt.Println("heyyydrawText ")
 	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
 	fontSize := float64(72)
@@ -249,7 +263,7 @@ func (b *ConcreteImageBuilder) DrawText() {
 }
 func (b *ConcreteImageBuilder) DrawTextMultiline() {
 	dc := b.DC
-	text := b.Specs.Text
+	text := b.Specs.text
 	fmt.Println("heyyydrawText ")
 	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
 	fontSize := float64(140)
@@ -286,7 +300,7 @@ func (b *ConcreteImageBuilder) Build() image.Image {
 	// b.DrawText()
 	// b.DrawTextStringWrapped()
 	b.DrawTextStringWrappedSHadow()
-	drawSignature(dc, b.Specs.Signature)
+	drawSignature(dc, b.Specs.signature)
 	// drawSignature(dc)
 	dc.SavePNG("gradient1.png")
 
