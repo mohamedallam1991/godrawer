@@ -10,15 +10,6 @@ import (
 	"github.com/fogleman/gg"
 )
 
-type ImageSpecs struct {
-	Width           int
-	Height          int
-	text            string
-	signature       string
-	fontSize        float64
-	BackGroundColor gg.Pattern
-}
-
 func ImageSpecsFactory(width int, height int) ImageSpecs {
 	return ImageSpecs{
 		Width:  width,
@@ -44,19 +35,6 @@ func NewConcreteImageBuilder(specs ImageSpecs) *ConcreteImageBuilder {
 type ConcreteImageBuilder struct {
 	Specs ImageSpecs
 	DC    *gg.Context
-}
-
-func (i *ImageSpecs) SetFont(fontSize int) *ImageSpecs {
-	i.fontSize = float64(fontSize)
-	return i
-}
-func (i *ImageSpecs) SetText(text string) *ImageSpecs {
-	i.text = text
-	return i
-}
-func (i *ImageSpecs) SetSignature(text string) *ImageSpecs {
-	i.signature = text
-	return i
 }
 
 // func (b *ConcreteImageBuilder) SetDimensions(width, height int) ImageBuilder {
@@ -128,12 +106,6 @@ func (b ConcreteImageBuilder) DrawSolidColor(solidColor string) {
 // 	dc.Fill()
 // }
 
-func countSteps(length float64) float64 {
-	step := 1 / length
-	// log.Fatal(step)
-	return float64(step)
-}
-
 // func (i ConcreteImageBuilder) DrawGradientColors(solidColor ...string) {
 // 	dc := i.DC
 
@@ -158,8 +130,8 @@ func countSteps(length float64) float64 {
 // 	dc.Fill()
 // }
 
-func (i ConcreteImageBuilder) DrawVerticalGradientColors(solidColor ...string) {
-	dc := i.DC
+func (b ConcreteImageBuilder) DrawVerticalGradientColors(solidColor ...string) {
+	dc := b.DC
 
 	// Create a new linear gradient with start and end points reversed to make it vertical
 	gradient := gg.NewLinearGradient(0, float64(dc.Height()), 0, 0)
@@ -170,7 +142,7 @@ func (i ConcreteImageBuilder) DrawVerticalGradientColors(solidColor ...string) {
 
 	// Add color stops for each provided color
 	for _, sc := range solidColor {
-		if sd, b := presetColors[sc]; b {
+		if sd, ok := presetColors[sc]; ok {
 			gradient.AddColorStop(step, sd)
 			step += stepSize
 		}
@@ -194,7 +166,7 @@ func (b ConcreteImageBuilder) DrawHorizontalGradientColors(solidColor ...string)
 
 	// Add color stops for each provided color
 	for _, sc := range solidColor {
-		if sd, b := presetColors[sc]; b {
+		if sd, ok := presetColors[sc]; ok {
 			gradient.AddColorStop(step, sd)
 			step += stepSize
 		}
@@ -230,68 +202,7 @@ func (b ConcreteImageBuilder) DrawHorizontalGradientColors(solidColor ...string)
 // 	dc.Fill()
 // }
 
-func (b *ConcreteImageBuilder) DrawText() {
-	dc := b.DC
-	text := b.Specs.text
-	fmt.Println("heyyydrawText ")
-	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
-	fontSize := b.Specs.fontSize
-	// height := b.Specs.Height
-	// width := b.Specs.Width
-	err := dc.LoadFontFace(fontPath, fontSize)
-	if err != nil {
-		log.Fatal(err)
-	}
-	a := GetColors()[9]
-	dc.SetColor(presetColors[a])
-
-	wrappedText := dc.WordWrap(text, float64(b.Specs.Width))
-	s := strings.Join(wrappedText, "\n")
-
-	// Calculate the total height of the wrapped text
-	lines := strings.Split(s, "\n")
-	lineHeight := float64(fontSize) * 1.5 // adjust this value to change the line spacing
-	totalHeight := float64(len(lines)) * lineHeight
-
-	// Draw the wrapped text in the center of the image
-	x := float64(b.Specs.Width) / 2.0
-	y := (float64(b.Specs.Height) - totalHeight) / 2.0
-	for _, line := range lines {
-		dc.DrawStringAnchored(line, float64(x), float64(y), 0.5, 0.5)
-		y += lineHeight
-	}
-}
-func (b *ConcreteImageBuilder) DrawTextMultiline() {
-	dc := b.DC
-	text := b.Specs.text
-	fmt.Println("heyyydrawText ")
-	fontPath := "/Users/mohamedallam/Library/Fonts/Ubuntu Mono derivative Powerline.ttf"
-	fontSize := b.Specs.fontSize
-
-	err := dc.LoadFontFace(fontPath, fontSize)
-	if err != nil {
-		log.Fatal(err)
-	}
-	dc.SetColor(color.White)
-
-	wrappedText := dc.WordWrap(text, float64(b.Specs.Width))
-	s := strings.Join(wrappedText, "\n")
-
-	lines := strings.Split(s, "\n")
-	lineHeight := float64(fontSize) * 1.5 // adjust this value to change the line spacing
-	totalHeight := float64(len(lines)) * lineHeight
-
-	x := float64(b.Specs.Width) / 2.0
-	y := (float64(b.Specs.Height) - totalHeight) / 2.0
-	for _, line := range lines {
-		dc.DrawStringAnchored(line, float64(x), float64(y), 0.5, 0.5)
-		y += lineHeight
-	}
-	// dc.MeasureMultilineString(lines, )
-	// dc.DrawStringWrapped(line)
-}
-
-func (b *ConcreteImageBuilder) Build() image.Image {
+func (b *ConcreteImageBuilder) Build(name string) image.Image {
 	// width := b.Specs.Width
 	// height := b.Specs.Height
 	dc := b.DC
@@ -302,7 +213,8 @@ func (b *ConcreteImageBuilder) Build() image.Image {
 	b.DrawTextStringWrappedSHadow()
 	drawSignature(dc, b.Specs.signature)
 	// drawSignature(dc)
-	dc.SavePNG("gradient1.png")
+	fullName := fmt.Sprintf("%v.png", name)
+	dc.SavePNG(fullName)
 
 	return dc.Image()
 }

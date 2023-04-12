@@ -89,6 +89,21 @@ func GetColors() []string {
 	return listOfcolors
 }
 
+func generateImage(w, h int, pixelColor color.RGBA) *image.RGBA {
+	img := image.NewRGBA(image.Rect(0, 0, 4, 4))
+	for x := 0; x < 4; x++ {
+		for y := 0; y < 4; y++ {
+			img.Set(x, y, pixelColor)
+		}
+	}
+	return img
+}
+
+func randomColor() color.RGBA {
+	rand := rand.New(rand.NewSource(time.Now().Unix()))
+	return color.RGBA{uint8(rand.Intn(255)), uint8(rand.Intn(255)), uint8(rand.Intn(255)), 255}
+}
+
 var presetColors = map[string]color.Color{
 	"red":            mySolidColor{Name: "red", R: 255, G: 0, B: 0, A: 255},
 	"green":          mySolidColor{Name: "green", R: 0, G: 255, B: 0, A: 255},
