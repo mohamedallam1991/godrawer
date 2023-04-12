@@ -26,6 +26,7 @@ type ImageBuilder interface {
 
 func NewConcreteImageBuilder(specs ImageSpecs) *ConcreteImageBuilder {
 	dc := gg.NewContext(specs.Width, specs.Height)
+
 	return &ConcreteImageBuilder{
 		Specs: specs,
 		DC:    dc,
