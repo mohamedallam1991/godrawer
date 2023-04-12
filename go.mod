@@ -9,4 +9,4 @@ require (
 	golang.org/x/image v0.5.0 // indirect
 )
 
-version v0.0.5
+version v0.0.6
